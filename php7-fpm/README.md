@@ -1,4 +1,4 @@
-ekyna/docker-php
-================
+ekyna/php7-fpm
+==============
 
-PHP docker image.
+PHP7 docker image.

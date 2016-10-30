@@ -1,4 +1,4 @@
-ekyna/docker-php-dev
-====================
+ekyna/php7-fpm-dev
+==================
 
-PHP docker image, with XDebug and SSH.
+PHP7 fpm docker image, with XDebug and SSH.
