@@ -52,11 +52,12 @@ RUN git config --global credential.helper cache \
 # Install composer
     && php -r "readfile('https://getcomposer.org/installer');" \
         | php -- --install-dir=/usr/local/bin --filename=composer \
-    && chmod +x /usr/local/bin/composer \
+    && chmod +x /usr/local/bin/composer
+
 # Create www-data user
-    && addgroup www-data -g 1000 \
-    && adduser -D -u 1000 -h /var/www -s /sbin/nologin -G www-data www-data \
-    && chown -Rf www-data:www-data /var/www
+RUN addgroup www-data -g 1000 \
+    && adduser -D -u 1000 -h /var/www -s /sbin/nologin -G www-data www-data
+#    && chown -Rf www-data:www-data /var/www
 
 WORKDIR /var/www
 
