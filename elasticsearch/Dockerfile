@@ -1,4 +1,4 @@
-FROM elasticsearch:1.5.2
+FROM elasticsearch:1.7.3
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
 RUN mkdir /dump && mkdir /backup
