@@ -33,6 +33,7 @@ RUN apk add \
       php7-bcmath \
       php7-exif \
       php7-soap \
+      php7-ftp \
       --update --no-cache \
 
 # JpegOptim and WkHtmlToPdf and APC (testing repository)
