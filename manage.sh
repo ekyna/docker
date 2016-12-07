@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOG_PATH=${DIR}/docker_logs.txt
 
 IMAGE_PREFIX="ekyna/"
-IMAGE_REGEXP="^php7-fpm(-dev)?|nginx|mysql|elasticsearch$"
+IMAGE_REGEXP="^php7-fpm(-dev)?|nginx|mysql|elasticsearch|varnish$"
 
 echo "" > ${LOG_PATH}
 
