@@ -1,14 +1,21 @@
 FROM alpine:3.4
 
-COPY start.sh /start.sh
-
-RUN apk add varnish \
+RUN apk add bash varnish \
     --no-cache --update \
-  && rm -rf /var/cache/apk/* \
-  && chmod +x /start.sh
+  && rm -rf /var/cache/apk/*
 
 COPY default.vcl /etc/varnish/default.vcl
+COPY docker-entrypoint.sh /usr/local/bin/
 
-VOLUME "/var/lib/varnish"
+COPY errors/500.html /var/www/errors/500.html
+COPY errors/503.html /var/www/errors/503.html
 
-CMD ["/start.sh"]
+RUN chmod 0755 /usr/local/bin/docker-entrypoint.sh
+
+ENV VARNISH_PORT 80
+
+#VOLUME "/var/lib/varnish" "/etc/varnish"
+
+EXPOSE 80
+
+ENTRYPOINT ["docker-entrypoint.sh"]
