@@ -13,9 +13,11 @@ COPY errors/503.html /var/www/errors/503.html
 RUN chmod 0755 /usr/local/bin/docker-entrypoint.sh
 
 ENV VARNISH_PORT 80
+ENV VARNISH_MEMORY "256M"
 
-#VOLUME "/var/lib/varnish" "/etc/varnish"
+VOLUME "/var/lib/varnish" "/etc/varnish"
 
 EXPOSE 80
 
 ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["start"]
