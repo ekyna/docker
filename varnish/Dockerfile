@@ -1,6 +1,6 @@
 FROM alpine:3.4
 
-RUN apk add bash varnish \
+RUN apk add bash curl varnish \
     --no-cache --update \
   && rm -rf /var/cache/apk/*
 
