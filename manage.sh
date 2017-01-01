@@ -46,21 +46,17 @@ ValidateImageName() {
 BuildImage() {
    ValidateImageName $1
 
-   printf "Building image \e[1;33m${IMAGE_PREFIX}$1\e[0m ... "
+   printf "Building image \e[1;33m${IMAGE_PREFIX}$1\e[0m\n"
 
-   docker build -f ${DIR}/$1/Dockerfile -t ${IMAGE_PREFIX}$1:latest ${DIR}/$1 >> ${LOG_PATH} 2>&1 \
-       && printf "\e[32mdone\e[0m\n" \
-       || (printf "\e[31merror\e[0m\n" && exit 1)
+   docker build -f ${DIR}/$1/Dockerfile -t ${IMAGE_PREFIX}$1:latest ${DIR}/$1
 }
 
 PushImage() {
     ValidateImageName $1
 
-    printf "Pushing image \e[1;33m${IMAGE_PREFIX}$1\e[0m ... "
+    printf "Pushing image \e[1;33m${IMAGE_PREFIX}$1\e[0m\n"
 
-    docker push ${IMAGE_PREFIX}$1:latest >> ${LOG_PATH} 2>&1 \
-       && printf "\e[32mdone\e[0m\n" \
-       || (printf "\e[31merror\e[0m\n" && exit 1)
+    docker push ${IMAGE_PREFIX}$1:latest
 }
 
 case $1 in
