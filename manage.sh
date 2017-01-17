@@ -48,7 +48,7 @@ BuildImage() {
 
    printf "Building image \e[1;33m${IMAGE_PREFIX}$1\e[0m\n"
 
-   docker build -f ${DIR}/$1/Dockerfile -t ${IMAGE_PREFIX}$1:latest ${DIR}/$1
+   docker build $2 -f ${DIR}/$1/Dockerfile -t ${IMAGE_PREFIX}$1:latest ${DIR}/$1
 }
 
 PushImage() {
@@ -56,7 +56,7 @@ PushImage() {
 
     printf "Pushing image \e[1;33m${IMAGE_PREFIX}$1\e[0m\n"
 
-    docker push ${IMAGE_PREFIX}$1:latest
+    docker push $2 ${IMAGE_PREFIX}$1:latest
 }
 
 case $1 in
@@ -66,7 +66,7 @@ case $1 in
         Title "Build ${IMAGE_PREFIX}$2"
         ConfirmPrompt
 
-        BuildImage $2
+        BuildImage $2 "${*:3}"
     ;;
     # ------------- PUSH -------------
     push)
@@ -75,13 +75,13 @@ case $1 in
         Title "Push ${IMAGE_PREFIX}$2"
         ConfirmPrompt
 
-        PushImage $2
+        PushImage $2 "${*:3}"
     ;;
     # ------------- HELP -------------
     *)
         Help "Usage: ./manage.sh [args]
-- build [name] : Build the [name] image.
-- push [name] : Push the [name] image.
+- build [name] [options]: Build the [name] image.
+- push [name] [options]: Push the [name] image.
 "
     ;;
 esac

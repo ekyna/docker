@@ -1,9 +1,11 @@
 FROM ekyna/php7-fpm
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
-RUN apk add php7-xdebug --update --no-cache \
-        --repository http://alpine.gliderlabs.com/alpine/edge/testing/ \
-    && apk add openssh supervisor --update --no-cache \
+RUN apk add \
+        openssh \
+        supervisor \
+        php7-xdebug=2.5.0-r1 \
+            --update --no-cache \
     && mkdir /var/run/sshd \
     && mkdir -p /var/log/supervisor \
     && echo 'root:root' | chpasswd \

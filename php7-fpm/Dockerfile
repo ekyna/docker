@@ -36,6 +36,7 @@ RUN apk add \
       php7-exif=$PHP_VERSION \
       php7-soap=$PHP_VERSION \
       php7-ftp=$PHP_VERSION \
+      php7-apcu=5.1.7-r0 \
 # For WkHtmlToPdf
       xvfb \
       ttf-freefont \
@@ -46,7 +47,6 @@ RUN apk add \
 
 # JpegOptim WkHtmlToPdf and APC (testing repository)
  && apk add \
-      php7-apcu \
       jpegoptim \
       wkhtmltopdf \
 
