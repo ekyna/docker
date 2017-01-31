@@ -1,12 +1,14 @@
 FROM alpine:edge
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
-ENV PHP_VERSION="7.0.14-r5"
+ENV PHP_VERSION="7.0.15-r0"
 
 COPY config /tmp/config
 
 RUN apk add \
 # Install utilies
+      mailcap \
+      file \
       bash \
       sed \
       grep \
