@@ -12,6 +12,8 @@ RUN apk add \
       bash \
       sed \
       grep \
+      curl \
+      unzip \
       git \
 # Install php
       php7=$PHP_VERSION \
@@ -38,10 +40,12 @@ RUN apk add \
       php7-exif=$PHP_VERSION \
       php7-soap=$PHP_VERSION \
       php7-ftp=$PHP_VERSION \
-      php7-apcu=5.1.7-r0 \
+      php7-zlib=$PHP_VERSION \
+      php7-apcu=5.1.8-r0 \
 # For WkHtmlToPdf
       xvfb \
       ttf-freefont \
+      libpng-dev \
       fontconfig \
       dbus \
 

@@ -1,4 +1,4 @@
-FROM ekyna/php7-fpm
+FROM ekyna/php7-fpm:7.0.15
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
 RUN apk add \
