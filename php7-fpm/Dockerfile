@@ -58,7 +58,6 @@ RUN apk add \
 # For WkHtmlToPdf
       xvfb \
       ttf-freefont \
-      libpng-dev \
       fontconfig \
       dbus \
 
@@ -76,7 +75,7 @@ RUN apk add \
 # Configure Git
  && git config --global credential.helper cache \
 
-# Wrapper for xvfb
+# XVFB wrapper for wkhtmltopdf
  && mv /usr/bin/wkhtmltopdf /usr/bin/wkhtmltopdf-origin \
  && echo $'#!/usr/bin/env sh\n\
 Xvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset & \n\
@@ -84,6 +83,15 @@ DISPLAY=:0.0 wkhtmltopdf-origin $@ \n\
 killall Xvfb\
 ' > /usr/bin/wkhtmltopdf && \
   chmod +x /usr/bin/wkhtmltopdf \
+
+# XVFB wrapper for wkhtmltoimage
+ && mv /usr/bin/wkhtmltoimage /usr/bin/wkhtmltoimage-origin \
+ && echo $'#!/usr/bin/env sh\n\
+Xvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset & \n\
+DISPLAY=:0.0 wkhtmltoimage-origin $@ \n\
+killall Xvfb\
+' > /usr/bin/wkhtmltoimage && \
+  chmod +x /usr/bin/wkhtmltoimage \
 
 # Configure PHP
 #  && ln -s /usr/bin/php7 /usr/bin/php \
