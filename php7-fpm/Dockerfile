@@ -1,7 +1,7 @@
-FROM alpine:edge
+FROM alpine:3.7
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
-ENV PHP_VERSION="7.1.12-r0"
+ENV PHP_VERSION="7.1.15-r0"
 
 COPY config /tmp/config
 
@@ -17,6 +17,7 @@ RUN apk add \
       git \
       jpegoptim \
       dcron \
+      imagemagick \
 # Install php
       php7=$PHP_VERSION \
       php7-dom=$PHP_VERSION \
@@ -56,6 +57,7 @@ RUN apk add \
       php7-oauth=2.0.2-r1 \
       php7-redis=3.1.4-r0 \
       php7-apcu=5.1.8-r1 \
+      php7-imagick=3.4.3-r3 \
 # For WkHtmlToPdf
       xvfb \
       ttf-freefont \
@@ -66,7 +68,7 @@ RUN apk add \
  && apk add \
       wkhtmltopdf=0.12.4-r0 \
       --update --no-cache \
-      --allow-untrusted --repository http://alpine.gliderlabs.com/alpine/edge/testing/ \
+      --allow-untrusted --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ \
 # Cleanup
  && rm -rf /var/cache/apk/* \
 # XVFB wrapper for wkhtmltopdf
@@ -95,7 +97,5 @@ RUN apk add \
  && chown -Rf www-data:www-data /var/www
 
 WORKDIR /var/www
-
-EXPOSE 9000
 
 CMD ["php-fpm7", "-F"]

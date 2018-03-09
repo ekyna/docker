@@ -1,4 +1,4 @@
-FROM ekyna/php7-fpm:7.1.12
+FROM ekyna/php7-fpm:7.1.15
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
 RUN apk add \
@@ -15,10 +15,5 @@ RUN apk add \
     && rm -rf /var/cache/apk/*
 
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# XDebug port
-EXPOSE 9090
-# SSH port
-EXPOSE 22
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
