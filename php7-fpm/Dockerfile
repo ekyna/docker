@@ -1,7 +1,7 @@
 FROM alpine:3.7
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
-ENV PHP_VERSION="7.1.15-r0"
+ENV PHP_VERSION="7.1.16-r1"
 
 COPY config /tmp/config
 
@@ -53,10 +53,10 @@ RUN apk add \
       php7-soap=$PHP_VERSION \
       php7-ftp=$PHP_VERSION \
       php7-zip=$PHP_VERSION \
-      php7-zlib=$PHP_VERSION \
+#      php7-zlib=$PHP_VERSION \
       php7-oauth=2.0.2-r1 \
       php7-redis=3.1.4-r0 \
-      php7-apcu=5.1.8-r1 \
+      php7-apcu=5.1.11-r0 \
       php7-imagick=3.4.3-r3 \
 # For WkHtmlToPdf
       xvfb \
