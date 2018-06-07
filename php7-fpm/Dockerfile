@@ -89,7 +89,11 @@ RUN apk add \
  && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php -r "if (trim(hash_file('SHA384', 'composer-setup.php')) !== trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Composer installer corrupt' . PHP_EOL; exit(1); }" \
  && php composer-setup.php --quiet --install-dir=/usr/bin --filename=composer \
- && php -r "unlink('composer-setup.php');"
+ && php -r "unlink('composer-setup.php');" \
+# Create www-data user
+ && addgroup www-data -g 1000 \
+ && adduser -D -u 1000 -h /var/www -s /sbin/nologin -G www-data www-data \
+ && chown -Rf www-data:www-data /var/www
 
 WORKDIR /var/www
 
