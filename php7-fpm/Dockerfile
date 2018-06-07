@@ -36,7 +36,6 @@ RUN apk add \
       php7-intl=$PHP_VERSION \
       php7-json=$PHP_VERSION \
       php7-mbstring=$PHP_VERSION \
-      php7-mcrypt=1.0.1-r0 \
       php7-mysqlnd=$PHP_VERSION \
       php7-oauth=2.0.2-r3 \
       php7-opcache=$PHP_VERSION \
@@ -49,6 +48,7 @@ RUN apk add \
       php7-session=$PHP_VERSION \
       php7-simplexml=$PHP_VERSION \
       php7-soap=$PHP_VERSION \
+      php7-sodium=$PHP_VERSION \
       php7-sockets=$PHP_VERSION \
       php7-tokenizer=$PHP_VERSION \
       php7-xml=$PHP_VERSION \
