@@ -1,7 +1,7 @@
-FROM alpine:3.7
+FROM alpine:edge
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
-ENV PHP_VERSION="7.1.16-r1"
+ENV PHP_VERSION="7.2.6-r0"
 
 COPY config /tmp/config
 
@@ -20,44 +20,43 @@ RUN apk add \
       imagemagick \
 # Install php
       php7=$PHP_VERSION \
-      php7-dom=$PHP_VERSION \
+      php7-apcu=5.1.11-r1 \
+      php7-bcmath=$PHP_VERSION \
       php7-ctype=$PHP_VERSION \
       php7-curl=$PHP_VERSION \
-      php7-fpm=$PHP_VERSION \
+      php7-dom=$PHP_VERSION \
+      php7-exif=$PHP_VERSION \
       php7-fileinfo=$PHP_VERSION \
-      php7-session=$PHP_VERSION \
-      php7-tokenizer=$PHP_VERSION \
-      php7-sockets=$PHP_VERSION \
-      php7-simplexml=$PHP_VERSION \
-      php7-ctype=$PHP_VERSION \
+      php7-fpm=$PHP_VERSION \
+      php7-ftp=$PHP_VERSION \
       php7-gd=$PHP_VERSION \
+      php7-iconv=$PHP_VERSION \
+      php7-imagick=3.4.3-r8 \
+      php7-imap=$PHP_VERSION \
       php7-intl=$PHP_VERSION \
       php7-json=$PHP_VERSION \
       php7-mbstring=$PHP_VERSION \
-      php7-mcrypt=$PHP_VERSION \
+      php7-mcrypt=1.0.1-r0 \
       php7-mysqlnd=$PHP_VERSION \
+      php7-oauth=2.0.2-r3 \
       php7-opcache=$PHP_VERSION \
+      php7-openssl=$PHP_VERSION \
       php7-pdo=$PHP_VERSION \
       php7-pdo_mysql=$PHP_VERSION \
+      php7-phar=$PHP_VERSION \
       php7-posix=$PHP_VERSION \
+      php7-redis=4.0.2-r0 \
       php7-session=$PHP_VERSION \
+      php7-simplexml=$PHP_VERSION \
+      php7-soap=$PHP_VERSION \
+      php7-sockets=$PHP_VERSION \
+      php7-tokenizer=$PHP_VERSION \
       php7-xml=$PHP_VERSION \
       php7-xmlreader=$PHP_VERSION \
       php7-xmlwriter=$PHP_VERSION \
       php7-xsl=$PHP_VERSION \
-      php7-iconv=$PHP_VERSION \
-      php7-phar=$PHP_VERSION \
-      php7-openssl=$PHP_VERSION \
-      php7-bcmath=$PHP_VERSION \
-      php7-exif=$PHP_VERSION \
-      php7-soap=$PHP_VERSION \
-      php7-ftp=$PHP_VERSION \
       php7-zip=$PHP_VERSION \
 #      php7-zlib=$PHP_VERSION \
-      php7-oauth=2.0.2-r1 \
-      php7-redis=3.1.4-r0 \
-      php7-apcu=5.1.11-r0 \
-      php7-imagick=3.4.3-r3 \
 # For WkHtmlToPdf
       xvfb \
       ttf-freefont \
@@ -90,11 +89,7 @@ RUN apk add \
  && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php -r "if (trim(hash_file('SHA384', 'composer-setup.php')) !== trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Composer installer corrupt' . PHP_EOL; exit(1); }" \
  && php composer-setup.php --quiet --install-dir=/usr/bin --filename=composer \
- && php -r "unlink('composer-setup.php');" \
-# Create www-data user
- && addgroup www-data -g 1000 \
- && adduser -D -u 1000 -h /var/www -s /sbin/nologin -G www-data www-data \
- && chown -Rf www-data:www-data /var/www
+ && php -r "unlink('composer-setup.php');"
 
 WORKDIR /var/www
 
