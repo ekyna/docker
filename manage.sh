@@ -59,6 +59,14 @@ PushImage() {
     docker push $2 ${IMAGE_PREFIX}$1:latest
 }
 
+TagImage() {
+    ValidateImageName $1
+
+    printf "Tagging image \e[1;33m${IMAGE_PREFIX}$1\e[0m\n"
+
+    docker tag ${IMAGE_PREFIX}$1:latest ${IMAGE_PREFIX}$1:$2
+}
+
 case $1 in
     build)
         ValidateImageName $2
@@ -77,11 +85,21 @@ case $1 in
 
         PushImage $2 "${*:3}"
     ;;
+    # ------------- PUSH -------------
+    tag)
+        ValidateImageName $2
+
+        Title "Tagging ${IMAGE_PREFIX}$2 to $3"
+        ConfirmPrompt
+
+        TagImage $2 $3
+    ;;
     # ------------- HELP -------------
     *)
         Help "Usage: ./manage.sh [args]
-- build [name] [options]: Build the [name] image.
-- push [name] [options]: Push the [name] image.
+- build [name] [options]: Builds the [name] image.
+- push [name] [options]: Pushes the [name] image.
+- tag [name] [tag]: Tags the [name] image.
 "
     ;;
 esac
