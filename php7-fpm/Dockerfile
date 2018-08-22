@@ -1,7 +1,7 @@
 FROM alpine:edge
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
-ENV PHP_VERSION="7.2.7-r0"
+ENV PHP_VERSION="7.2.9-r0"
 
 COPY config /tmp/config
 
@@ -16,12 +16,13 @@ RUN apk add \
       unzip \
       git \
       jpegoptim \
+      pngquant \
       dcron \
       imagemagick \
       ffmpeg \
 # Install php
       php7=$PHP_VERSION \
-      php7-apcu=5.1.12-r0 \
+      php7-apcu=5.1.12-r1 \
       php7-bcmath=$PHP_VERSION \
       php7-ctype=$PHP_VERSION \
       php7-curl=$PHP_VERSION \
@@ -45,7 +46,7 @@ RUN apk add \
       php7-pdo_mysql=$PHP_VERSION \
       php7-phar=$PHP_VERSION \
       php7-posix=$PHP_VERSION \
-      php7-redis=4.1.0-r0 \
+      php7-redis=4.1.1-r0 \
       php7-session=$PHP_VERSION \
       php7-simplexml=$PHP_VERSION \
       php7-soap=$PHP_VERSION \
