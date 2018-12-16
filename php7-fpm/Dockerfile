@@ -1,18 +1,13 @@
-FROM alpine:edge
+FROM alpine:3.8
+
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
-ENV PHP_VERSION="7.2.9-r0"
-
-COPY config /tmp/config
-
 RUN apk add \
-# Install utilies
       mailcap \
       file \
       bash \
       sed \
       grep \
-      curl \
       unzip \
       git \
       jpegoptim \
@@ -20,83 +15,63 @@ RUN apk add \
       dcron \
       imagemagick \
       ffmpeg \
-# Install php
-      php7=$PHP_VERSION \
-      php7-apcu=5.1.12-r1 \
-      php7-bcmath=$PHP_VERSION \
-      php7-ctype=$PHP_VERSION \
-      php7-curl=$PHP_VERSION \
-      php7-dom=$PHP_VERSION \
-      php7-exif=$PHP_VERSION \
-      php7-fileinfo=$PHP_VERSION \
-      php7-fpm=$PHP_VERSION \
-      php7-ftp=$PHP_VERSION \
-      php7-gd=$PHP_VERSION \
-      php7-iconv=$PHP_VERSION \
-      php7-imagick=3.4.3-r8 \
-      php7-imap=$PHP_VERSION \
-      php7-intl=$PHP_VERSION \
-      php7-json=$PHP_VERSION \
-      php7-mbstring=$PHP_VERSION \
-      php7-mysqlnd=$PHP_VERSION \
-      php7-oauth=2.0.2-r3 \
-      php7-opcache=$PHP_VERSION \
-      php7-openssl=$PHP_VERSION \
-      php7-pdo=$PHP_VERSION \
-      php7-pdo_mysql=$PHP_VERSION \
-      php7-phar=$PHP_VERSION \
-      php7-posix=$PHP_VERSION \
-      php7-redis=4.1.1-r0 \
-      php7-session=$PHP_VERSION \
-      php7-simplexml=$PHP_VERSION \
-      php7-soap=$PHP_VERSION \
-      php7-sodium=$PHP_VERSION \
-      php7-sockets=$PHP_VERSION \
-      php7-tokenizer=$PHP_VERSION \
-      php7-xml=$PHP_VERSION \
-      php7-xmlreader=$PHP_VERSION \
-      php7-xmlwriter=$PHP_VERSION \
-      php7-xsl=$PHP_VERSION \
-      php7-zip=$PHP_VERSION \
-#      php7-zlib=$PHP_VERSION \
-# For WkHtmlToPdf
+      php7 \
+      php7-apcu \
+      php7-bcmath \
+      php7-ctype \
+      php7-curl \
+      php7-dom \
+      php7-exif \
+      php7-fileinfo \
+      php7-fpm \
+      php7-ftp \
+      php7-gd \
+      php7-iconv \
+      php7-imagick \
+      php7-imap \
+      php7-intl \
+      php7-json \
+      php7-mbstring \
+      php7-mysqlnd \
+      php7-oauth \
+      php7-opcache \
+      php7-openssl \
+      php7-pdo \
+      php7-pdo_mysql \
+      php7-phar \
+      php7-posix \
+      php7-redis \
+      php7-session \
+      php7-simplexml \
+      php7-soap \
+      php7-sodium \
+      php7-sockets \
+      php7-tokenizer \
+      php7-xml \
+      php7-xmlreader \
+      php7-xmlwriter \
+      php7-xsl \
+      php7-zip \
       xvfb \
       ttf-freefont \
       fontconfig \
       dbus \
-      --update --no-cache \
-# WkHtmlToPdf (testing repository)
+      libressl2.7-libcrypto \
+      --no-cache \
  && apk add \
-      wkhtmltopdf=0.12.4-r0 \
-      --update --no-cache \
-      --allow-untrusted --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ \
-# Cleanup
+      wkhtmltopdf \
+      --no-cache \
+      --allow-untrusted --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
  && rm -rf /var/cache/apk/* \
-# XVFB wrapper for wkhtmltopdf
  && mv /usr/bin/wkhtmltopdf /usr/bin/wkhtmltopdf-origin \
  && echo $'#!/usr/bin/env sh\nXvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset & \nDISPLAY=:0.0 wkhtmltopdf-origin $@ \nkillall Xvfb' > /usr/bin/wkhtmltopdf \
  && chmod +x /usr/bin/wkhtmltopdf \
-# XVFB wrapper for wkhtmltoimage
  && mv /usr/bin/wkhtmltoimage /usr/bin/wkhtmltoimage-origin \
  && echo $'#!/usr/bin/env sh\nXvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset & \nDISPLAY=:0.0 wkhtmltoimage-origin $@ \nkillall Xvfb' > /usr/bin/wkhtmltoimage \
  && chmod +x /usr/bin/wkhtmltoimage \
-# Configure PHP
-#  && ln -s /usr/bin/php7 /usr/bin/php
- && mv -f /tmp/config/php.ini /etc/php7/conf.d/50-settings.ini \
- && mv -f /tmp/config/php-fpm.conf /etc/php7/php-fpm.conf \
- && rm -Rf /tmp/config \
-#  && chmod 0700 /etc/php7/conf.d/50-settings.ini
-#  && chmod 0700 /etc/php7/php-fpm.conf
-# Install composer
  && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php -r "if (trim(hash_file('SHA384', 'composer-setup.php')) !== trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Composer installer corrupt' . PHP_EOL; exit(1); }" \
  && php composer-setup.php --quiet --install-dir=/usr/bin --filename=composer \
- && php -r "unlink('composer-setup.php');" \
-# Create www-data user
- && addgroup www-data -g 1000 \
- && adduser -D -u 1000 -h /var/www -s /sbin/nologin -G www-data www-data \
- && chown -Rf www-data:www-data /var/www
-
-WORKDIR /var/www
+ && php -r "unlink('composer-setup.php');"
 
 CMD ["php-fpm7", "-F"]
