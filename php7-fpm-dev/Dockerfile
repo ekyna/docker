@@ -1,10 +1,10 @@
-FROM ekyna/php7-fpm:7.2.13
+FROM ekyna/php7-fpm:7.2.14
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
 RUN apk add \
     openssh \
     supervisor \
-    php7-xdebug \
+    php7-pecl-xdebug \
     --no-cache \
 && git config --global credential.helper cache \
 && mkdir /var/run/sshd \

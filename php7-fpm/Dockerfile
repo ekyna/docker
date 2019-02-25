@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.9
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
@@ -16,7 +16,7 @@ RUN apk add \
       imagemagick \
       ffmpeg \
       php7 \
-      php7-apcu \
+      php7-pecl-apcu \
       php7-bcmath \
       php7-ctype \
       php7-curl \
@@ -27,20 +27,20 @@ RUN apk add \
       php7-ftp \
       php7-gd \
       php7-iconv \
-      php7-imagick \
+      php7-pecl-imagick \
       php7-imap \
       php7-intl \
       php7-json \
       php7-mbstring \
       php7-mysqlnd \
-      php7-oauth \
+      php7-pecl-oauth \
       php7-opcache \
       php7-openssl \
       php7-pdo \
       php7-pdo_mysql \
       php7-phar \
       php7-posix \
-      php7-redis \
+      php7-pecl-redis \
       php7-session \
       php7-simplexml \
       php7-soap \
@@ -57,11 +57,8 @@ RUN apk add \
       fontconfig \
       dbus \
       libressl2.7-libcrypto \
-      --no-cache \
- && apk add \
       wkhtmltopdf \
       --no-cache \
-      --allow-untrusted --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
  && rm -rf /var/cache/apk/* \
  && mv /usr/bin/wkhtmltopdf /usr/bin/wkhtmltopdf-origin \
  && echo $'#!/usr/bin/env sh\nXvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset & \nDISPLAY=:0.0 wkhtmltopdf-origin $@ \nkillall Xvfb' > /usr/bin/wkhtmltopdf \
