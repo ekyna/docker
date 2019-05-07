@@ -13,6 +13,7 @@ RUN apk add \
       jpegoptim \
       pngquant \
       dcron \
+      rsync \
       imagemagick \
       ffmpeg \
       php7 \
