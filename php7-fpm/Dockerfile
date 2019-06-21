@@ -3,6 +3,7 @@ FROM alpine:3.9
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
 RUN apk add \
+      tzdata \
       mailcap \
       file \
       bash \
@@ -72,4 +73,15 @@ RUN apk add \
  && php composer-setup.php --quiet --install-dir=/usr/bin --filename=composer \
  && php -r "unlink('composer-setup.php');"
 
-CMD ["php-fpm7", "-F"]
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh \
+ && mkdir -p /entrypoint.d
+
+EXPOSE 9000
+
+ENV TZ="Europe/Paris" \
+    LANG="C.UTF-8"
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+CMD ["/usr/sbin/php-fpm7", "-F"]
