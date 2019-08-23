@@ -5,6 +5,7 @@ LOG_PATH=${DIR}/docker_logs.txt
 
 IMAGE_PREFIX="ekyna/"
 IMAGE_REGEXP="^php7-fpm(-dev)?|nginx|mysql|elasticsearch|varnish$"
+TAG_REGEXP="^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$"
 
 echo "" > ${LOG_PATH}
 
@@ -54,9 +55,9 @@ BuildImage() {
 PushImage() {
     ValidateImageName $1
 
-    printf "Pushing image \e[1;33m${IMAGE_PREFIX}$1\e[0m\n"
+    printf "Pushing image \e[1;33m${IMAGE_PREFIX}$1:$2\e[0m\n"
 
-    docker push $2 ${IMAGE_PREFIX}$1:latest
+    docker push ${IMAGE_PREFIX}$1:$2
 }
 
 TagImage() {
@@ -80,10 +81,21 @@ case $1 in
     push)
         ValidateImageName $2
 
-        Title "Push ${IMAGE_PREFIX}$2"
+        TAG=latest
+        if [[ "$3" != "" ]]
+        then
+            if [[ ! $3 =~ $TAG_REGEX ]]
+            then
+                printf "\e[31mInvalid image tag\e[0m\n"
+                exit 1
+            fi
+            TAG="$3"
+        fi
+
+        Title "Push ${IMAGE_PREFIX}$2:${TAG}"
         ConfirmPrompt
 
-        PushImage $2 "${*:3}"
+        PushImage $2 ${TAG}
     ;;
     # ------------- PUSH -------------
     tag)
