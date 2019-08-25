@@ -17,6 +17,7 @@ RUN apk add \
       rsync \
       imagemagick \
       ffmpeg \
+      gettext \
       php7 \
       php7-pecl-apcu \
       php7-bcmath \
@@ -33,6 +34,7 @@ RUN apk add \
       php7-imap \
       php7-intl \
       php7-json \
+      php7-gettext \
       php7-mbstring \
       php7-mysqlnd \
       php7-pecl-oauth \
