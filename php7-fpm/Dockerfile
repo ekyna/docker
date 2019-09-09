@@ -82,7 +82,8 @@ RUN chmod +x /entrypoint.sh \
 EXPOSE 9000
 
 ENV TZ="Europe/Paris" \
-    LANG="C.UTF-8"
+    LANG="C.UTF-8" \
+    COMPOSER_MIRROR_PATH_REPOS=1
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
