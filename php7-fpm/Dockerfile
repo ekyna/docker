@@ -58,6 +58,7 @@ RUN apk add \
       php7-zip \
       xvfb \
       ttf-freefont \
+      ttf-opensans \
       fontconfig \
       dbus \
       libressl2.7-libcrypto \
