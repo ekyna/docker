@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.11
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
@@ -19,7 +19,6 @@ RUN apk add \
       ffmpeg \
       gettext \
       php7 \
-      php7-pecl-apcu \
       php7-bcmath \
       php7-ctype \
       php7-curl \
@@ -30,21 +29,23 @@ RUN apk add \
       php7-ftp \
       php7-gd \
       php7-iconv \
-      php7-pecl-imagick \
       php7-imap \
       php7-intl \
       php7-json \
       php7-gettext \
       php7-mbstring \
       php7-mysqlnd \
-      php7-pecl-oauth \
       php7-opcache \
       php7-openssl \
+      php7-pcntl \
       php7-pdo \
       php7-pdo_mysql \
+      php7-pecl-apcu \
+      php7-pecl-imagick \
+      php7-pecl-oauth \
+      php7-pecl-redis \
       php7-phar \
       php7-posix \
-      php7-pecl-redis \
       php7-session \
       php7-simplexml \
       php7-soap \
@@ -61,7 +62,7 @@ RUN apk add \
       ttf-opensans \
       fontconfig \
       dbus \
-      libressl2.7-libcrypto \
+      libressl3.0-libcrypto \
       wkhtmltopdf \
       --no-cache \
  && rm -rf /var/cache/apk/* \
