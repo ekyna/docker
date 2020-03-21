@@ -57,21 +57,8 @@ RUN apk add \
       php7-xmlwriter \
       php7-xsl \
       php7-zip \
-      xvfb \
-      ttf-freefont \
-      ttf-opensans \
-      fontconfig \
-      dbus \
-      libressl3.0-libcrypto \
-      wkhtmltopdf \
       --no-cache \
  && rm -rf /var/cache/apk/* \
- && mv /usr/bin/wkhtmltopdf /usr/bin/wkhtmltopdf-origin \
- && echo $'#!/usr/bin/env sh\nXvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset & \nDISPLAY=:0.0 wkhtmltopdf-origin $@ \nkillall Xvfb' > /usr/bin/wkhtmltopdf \
- && chmod +x /usr/bin/wkhtmltopdf \
- && mv /usr/bin/wkhtmltoimage /usr/bin/wkhtmltoimage-origin \
- && echo $'#!/usr/bin/env sh\nXvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset & \nDISPLAY=:0.0 wkhtmltoimage-origin $@ \nkillall Xvfb' > /usr/bin/wkhtmltoimage \
- && chmod +x /usr/bin/wkhtmltoimage \
  && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php -r "if (trim(hash_file('SHA384', 'composer-setup.php')) !== trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Composer installer corrupt' . PHP_EOL; exit(1); }" \
  && php composer-setup.php --quiet --install-dir=/usr/bin --filename=composer \
