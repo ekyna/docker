@@ -17,6 +17,7 @@ RUN apk add \
       rsync \
       imagemagick \
       ffmpeg \
+      faac \
       gettext \
       php7 \
       php7-bcmath \
