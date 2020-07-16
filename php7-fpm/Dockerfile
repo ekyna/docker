@@ -1,6 +1,8 @@
-FROM alpine:3.11
+FROM alpine:3.12
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
+
+COPY --from=mwader/static-ffmpeg:4.3 /ffmpeg /ffprobe /usr/bin/
 
 RUN apk add \
       tzdata \
@@ -16,8 +18,6 @@ RUN apk add \
       dcron \
       rsync \
       imagemagick \
-      ffmpeg \
-      faac \
       gettext \
       php7 \
       php7-bcmath \
