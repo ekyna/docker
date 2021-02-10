@@ -1,8 +1,8 @@
-FROM alpine:3.12
+FROM alpine:3.13
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
-COPY --from=mwader/static-ffmpeg:4.3 /ffmpeg /ffprobe /usr/bin/
+COPY --from=mwader/static-ffmpeg:latest /ffmpeg /ffprobe /usr/bin/
 
 RUN apk add \
       tzdata \
