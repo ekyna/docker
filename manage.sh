@@ -112,6 +112,18 @@ case $1 in
 
         TagImage "${2}" "${3}"
     ;;
+    # ------------- PUSH -------------
+    php)
+        ValidateTagName "${2}"
+
+        Title "Building and tagging ${IMAGE_PREFIX}php7-fpm(-dev):${2}"
+        ConfirmPrompt
+
+        BuildImage 'php7-fpm'
+        TagImage 'php7-fpm' "${2}"
+        BuildImage 'php7-fpm-dev'
+        TagImage 'php7-fpm-dev' "${2}"
+    ;;
     # ------------- HELP -------------
     *)
         Help "Usage: ./manage.sh [args]
