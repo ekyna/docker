@@ -20,22 +20,15 @@ RUN apk add \
         rsync \
         imagemagick \
         gettext \
-        freetype \
-        libjpeg-turbo \
-        libpng \
-        libwebp \
-        libxpm \
-        musl \
         --no-cache \
  && rm -rf /var/cache/apk/* \
- && docker-php-ext-configure gd --with-freetype --with-jpeg --with-png --with-xpm --with-webp \
- && docker-php-ext-install -j$(nproc) gd \
  && install-php-extensions \
         @composer \
         bcmath \
         exif \
         imap \
         intl \
+        gd \
         gettext \
         opcache \
         pcntl \
@@ -43,6 +36,7 @@ RUN apk add \
         soap \
         sockets \
         xsl \
+        zip \
         apcu \
         oauth \
         imagick \
