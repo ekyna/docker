@@ -1,4 +1,4 @@
-FROM elasticsearch:7.11.2
+FROM elasticsearch:7.12.1
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
