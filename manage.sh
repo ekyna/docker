@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOG_PATH=${DIR}/docker_logs.txt
 
 IMAGE_PREFIX="ekyna/"
-IMAGE_REGEXP="^php7-fpm(-dev)?|nginx|mysql|elasticsearch|varnish$"
+IMAGE_REGEXP="^php(7|56)-fpm(-dev)?|nginx|mysql|elasticsearch|varnish$"
 TAG_REGEXP="^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$"
 
 echo "" > ${LOG_PATH}
@@ -84,7 +84,7 @@ case $1 in
         TAG=latest
         if [[ "$3" != "" ]]
         then
-            if [[ ! $3 =~ $TAG_REGEX ]]
+            if [[ ! $3 =~ $TAG_REGEXP ]]
             then
                 printf "\e[31mInvalid image tag\e[0m\n"
                 exit 1
