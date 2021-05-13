@@ -14,6 +14,7 @@ RUN apt-get update \
  && apt-get install -y --force-yes \
     curl \
     git \
+    nano \
     unzip \
     xvfb \
     xauth \
