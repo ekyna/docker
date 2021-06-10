@@ -67,7 +67,8 @@ RUN apt-get update \
  && php -r "unlink('composer-setup.php');" \
  && apt-get autoremove -y \
  && apt-get clean all \
- && rm -r /var/lib/apt/lists/*
+ && rm -r /var/lib/apt/lists/* \
+ && usermod -s /bin/bash www-data
 
 WORKDIR /var/www
 
