@@ -1,4 +1,4 @@
-FROM ekyna/php7-fpm:7.4.26
+FROM ekyna/php7-fpm:7.4.27
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
