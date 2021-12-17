@@ -1,9 +1,10 @@
-FROM php:7.4.16-fpm-alpine
+FROM php:7.4.26-fpm-alpine
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
+# Pull these images before build
 COPY --from=mwader/static-ffmpeg:latest /ffmpeg /ffprobe /usr/local/bin/
-COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=mlocati/php-extension-installer:latest /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN apk add \
         tzdata \
@@ -25,6 +26,7 @@ RUN apk add \
  && install-php-extensions \
         @composer \
         bcmath \
+        decimal \
         exif \
         imap \
         intl \
