@@ -1,4 +1,4 @@
-FROM mysql:8
+FROM mysql:8.0.27
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 

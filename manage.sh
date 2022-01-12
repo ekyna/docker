@@ -4,13 +4,17 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOG_PATH=${DIR}/docker_logs.txt
 
 IMAGE_PREFIX="ekyna/"
-IMAGE_REGEXP="^php7-fpm(-dev)?|nginx|mysql|elasticsearch|varnish$"
+IMAGE_REGEXP="^php7-fpm(-dev)?|mysql|elasticsearch"
 TAG_REGEXP="^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$"
 
-echo "" > ${LOG_PATH}
+echo "" > "${LOG_PATH}"
 
 Title() {
-    printf "\n\e[1;104m ----- %s ----- \e[0m\n" "${1}"
+    printf "\n\e[1;46m ----- %s ----- \e[0m\n" "${1}"
+}
+
+Error() {
+    printf "\e[31m%s\e[0m\n" "$1"
 }
 
 Help() {
@@ -39,7 +43,7 @@ ConfirmPrompt () {
 ValidateImageName() {
     if [[ ! $1 =~ $IMAGE_REGEXP ]]
     then
-        printf "\e[31mInvalid image name\e[0m\n"
+        Error "Invalid image name"
         exit 1
     fi
 }
@@ -47,26 +51,21 @@ ValidateImageName() {
 ValidateTagName() {
     if [[ ! $1 =~ $TAG_REGEXP ]]
     then
-        printf "\e[31mInvalid tag name\e[0m\n"
+        Error "Invalid tag name"
         exit 1
     fi
 }
 
 BuildImage() {
-   ValidateImageName "${1}"
-
-   printf "Building image \e[1;33m%s\e[0m\n" "${IMAGE_PREFIX}${1}"
-
-   docker build ${2} -f "${DIR}/$1/Dockerfile" -t "${IMAGE_PREFIX}${1}:latest" "${DIR}/${1}"
-}
-
-PushImage() {
     ValidateImageName "${1}"
-    ValidateTagName "${2}"
 
-    printf "Pushing image \e[1;33m%s\e[0m\n" "${IMAGE_PREFIX}${1}:${2}"
+    printf "Building image \e[1;33m%s\e[0m\n" "${IMAGE_PREFIX}${1}"
 
-    docker push "${IMAGE_PREFIX}${1}:${2}"
+    if ! docker build ${2} -f "${DIR}/$1/Dockerfile" -t "${IMAGE_PREFIX}${1}:latest" "${DIR}/${1}"
+    then
+        Error "Failed to build ${IMAGE_PREFIX}${1}:latest image"
+        exit 1
+    fi
 }
 
 TagImage() {
@@ -75,7 +74,24 @@ TagImage() {
 
     printf "Tagging image \e[1;33m%s\e[0m\n" "${IMAGE_PREFIX}${1}"
 
-    docker tag "${IMAGE_PREFIX}${1}:latest" "${IMAGE_PREFIX}${1}:${2}"
+    if ! docker tag "${IMAGE_PREFIX}${1}:latest" "${IMAGE_PREFIX}${1}:${2}"
+    then
+        Error "Failed to tag ${IMAGE_PREFIX}${1}:${2} image"
+        exit 1
+    fi
+}
+
+PushImage() {
+    ValidateImageName "${1}"
+    ValidateTagName "${2}"
+
+    printf "Pushing image \e[1;33m%s\e[0m\n" "${IMAGE_PREFIX}${1}:${2}"
+
+    if ! docker push "${IMAGE_PREFIX}${1}:${2}"
+    then
+        Error "Failed to push ${IMAGE_PREFIX}${1}:${2} image"
+        exit 1
+    fi
 }
 
 case $1 in
@@ -112,7 +128,7 @@ case $1 in
 
         TagImage "${2}" "${3}"
     ;;
-    # ------------- PUSH -------------
+    # ------------- PHP -------------
     php)
         ValidateTagName "${2}"
 
@@ -121,8 +137,32 @@ case $1 in
 
         BuildImage 'php7-fpm'
         TagImage 'php7-fpm' "${2}"
+        #PushImage 'php7-fpm' "${2}"
         BuildImage 'php7-fpm-dev'
         TagImage 'php7-fpm-dev' "${2}"
+        #PushImage 'php7-fpm-dev' "${2}"
+    ;;
+    # ------------- MYSQL -------------
+    mysql)
+        ValidateTagName "${2}"
+
+        Title "Building and tagging ${IMAGE_PREFIX}mysql:${2}"
+        ConfirmPrompt
+
+        BuildImage 'mysql'
+        TagImage 'mysql' "${2}"
+        #PushImage 'mysql' "${2}"
+    ;;
+    # ------------- ELASTICSEARCH -------------
+    elasticsearch)
+        ValidateTagName "${2}"
+
+        Title "Building and tagging ${IMAGE_PREFIX}elasticsearch:${2}"
+        ConfirmPrompt
+
+        BuildImage 'elasticsearch'
+        TagImage 'elasticsearch' "${2}"
+        #PushImage 'elasticsearch' "${2}"
     ;;
     # ------------- HELP -------------
     *)
