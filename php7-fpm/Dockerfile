@@ -1,4 +1,4 @@
-FROM php:7.4.27-fpm-alpine
+FROM php:7.4.29-fpm-alpine
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
@@ -43,6 +43,7 @@ RUN apk add \
         oauth \
         imagick \
         redis \
+        amqp \
  && docker-php-source delete \
  && rm /usr/local/bin/install-php-extensions
 

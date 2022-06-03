@@ -4,8 +4,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOG_PATH=${DIR}/docker_logs.txt
 
 IMAGE_PREFIX="ekyna/"
-IMAGE_REGEXP="^php7-fpm(-dev)?|mysql|elasticsearch"
-TAG_REGEXP="^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}$"
+IMAGE_REGEXP="^php7-fpm(-dev)?|mysql|elasticsearch|rabbitmq"
+TAG_REGEXP="^[0-9]{1,2}\.[0-9]{1,2}(\.[0-9]{1,2})?$"
 
 echo "" > "${LOG_PATH}"
 
@@ -168,7 +168,7 @@ case $1 in
     *)
         Help "Usage: ./manage.sh [args]
 - build [name] [options]  Builds the [name] image.
-- push [name] [options]   Pushes the [name] image.
+- push [name] [tag]       Pushes the [name] image.
 - tag [name] [tag]        Tags the [name] image.
 "
     ;;

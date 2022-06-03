@@ -1,4 +1,4 @@
-FROM ekyna/php7-fpm:7.4.27
+FROM ekyna/php7-fpm:7.4.29
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
@@ -19,6 +19,6 @@ RUN apk add \
  && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config \
  && ssh-keygen -A
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY supervisord.conf /etc/supervisor/conf.d/php-ssh-dev.conf
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/php-ssh-dev.conf"]
