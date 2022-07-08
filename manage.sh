@@ -138,11 +138,11 @@ case $1 in
 
         BuildImage 'php8-fpm'
         TagImage 'php8-fpm' "${2}"
-        #PushImage 'php8-fpm' "${2}"
+        PushImage 'php8-fpm' "${2}"
 
         BuildImage 'php8-fpm-dev'
         TagImage 'php8-fpm-dev' "${2}"
-        #PushImage 'php8-fpm-dev' "${2}"
+        PushImage 'php8-fpm-dev' "${2}"
     ;;
     # ------------- MYSQL -------------
     mysql)
