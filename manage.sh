@@ -1,13 +1,10 @@
 #!/bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-LOG_PATH=${DIR}/docker_logs.txt
 
 IMAGE_PREFIX="ekyna/"
-IMAGE_REGEXP="^php7-fpm(-dev)?|mysql|elasticsearch|rabbitmq"
+IMAGE_REGEXP="^php(7|8)-fpm(-dev)?|mysql|elasticsearch|rabbitmq$"
 TAG_REGEXP="^[0-9]{1,2}\.[0-9]{1,2}(\.[0-9]{1,2})?$"
-
-echo "" > "${LOG_PATH}"
 
 Title() {
     printf "\n\e[1;46m ----- %s ----- \e[0m\n" "${1}"
@@ -61,6 +58,7 @@ BuildImage() {
 
     printf "Building image \e[1;33m%s\e[0m\n" "${IMAGE_PREFIX}${1}"
 
+    # shellcheck disable=SC2086
     if ! docker build ${2} -f "${DIR}/$1/Dockerfile" -t "${IMAGE_PREFIX}${1}:latest" "${DIR}/${1}"
     then
         Error "Failed to build ${IMAGE_PREFIX}${1}:latest image"
@@ -132,15 +130,19 @@ case $1 in
     php)
         ValidateTagName "${2}"
 
-        Title "Building and tagging ${IMAGE_PREFIX}php7-fpm(-dev):${2}"
+        Title "Building and tagging ${IMAGE_PREFIX}php8-fpm(-dev):${2}"
         ConfirmPrompt
 
-        BuildImage 'php7-fpm'
-        TagImage 'php7-fpm' "${2}"
-        #PushImage 'php7-fpm' "${2}"
-        BuildImage 'php7-fpm-dev'
-        TagImage 'php7-fpm-dev' "${2}"
-        #PushImage 'php7-fpm-dev' "${2}"
+        docker pull mwader/static-ffmpeg:latest
+        docker pull mlocati/php-extension-installer:latest
+
+        BuildImage 'php8-fpm'
+        TagImage 'php8-fpm' "${2}"
+        #PushImage 'php8-fpm' "${2}"
+
+        BuildImage 'php8-fpm-dev'
+        TagImage 'php8-fpm-dev' "${2}"
+        #PushImage 'php8-fpm-dev' "${2}"
     ;;
     # ------------- MYSQL -------------
     mysql)
