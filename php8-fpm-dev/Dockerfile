@@ -1,4 +1,4 @@
-FROM ekyna/php8-fpm:8.1.8
+FROM ekyna/php8-fpm:8.1.9
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 

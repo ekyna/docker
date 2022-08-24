@@ -1,4 +1,4 @@
-FROM php:8.1.8-fpm-alpine3.16
+FROM php:8.1.9-fpm-alpine3.16
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
@@ -26,6 +26,7 @@ RUN set -eux; \
         pdo_mysql \
         soap \
         sockets \
+        ssh2 \
         xsl \
         zip \
         apcu \
