@@ -1,4 +1,4 @@
-FROM php:8.1.10-fpm-alpine3.16
+FROM php:8.2.10-fpm-alpine3.18
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 

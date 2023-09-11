@@ -1,4 +1,4 @@
-FROM rabbitmq:3.10-alpine
+FROM rabbitmq:3.12-alpine
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 

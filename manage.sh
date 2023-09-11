@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 IMAGE_PREFIX="ekyna/"
 IMAGE_REGEXP="^php(7|8)-fpm(-dev)?|mysql|elasticsearch|rabbitmq$"
-TAG_REGEXP="^[0-9]{1,2}\.[0-9]{1,2}(\.[0-9]{1,2})?$"
+TAG_REGEXP="^latest|[0-9]{1,2}\.[0-9]{1,2}(\.[0-9]{1,2})?$"
 
 Title() {
     printf "\n\e[1;46m ----- %s ----- \e[0m\n" "${1}"
@@ -165,6 +165,17 @@ case $1 in
         BuildImage 'elasticsearch'
         TagImage 'elasticsearch' "${2}"
         #PushImage 'elasticsearch' "${2}"
+    ;;
+    # ------------- RABBITMQ -------------
+    rabbitmq)
+        ValidateTagName "${2}"
+
+        Title "Building and tagging ${IMAGE_PREFIX}rabbitmq:${2}"
+        ConfirmPrompt
+
+        BuildImage 'rabbitmq'
+        TagImage 'rabbitmq' "${2}"
+        #PushImage 'rabbitmq' "${2}"
     ;;
     # ------------- HELP -------------
     *)

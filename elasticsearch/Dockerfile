@@ -1,8 +1,8 @@
-FROM elasticsearch:7.16.2
+FROM elasticsearch:7.17.12
 
 MAINTAINER Etienne Dauvergne <contact@ekyna.com>
 
-COPY docker-healthcheck /usr/local/bin/
+COPY --chmod="544" docker-healthcheck /usr/local/bin/
 
 HEALTHCHECK CMD ["docker-healthcheck"]
 
