@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 IMAGE_PREFIX="ekyna/"
-IMAGE_REGEXP="^php(7|8)-fpm(-dev)?|mysql|elasticsearch|rabbitmq$"
+IMAGE_REGEXP="^php(7|8)-fpm(-dev)?|mysql|elasticsearch|rabbitmq|gotenberg$"
 TAG_REGEXP="^latest|[0-9]{1,2}\.[0-9]{1,2}(\.[0-9]{1,2})?$"
 
 Title() {
@@ -176,6 +176,17 @@ case $1 in
         BuildImage 'rabbitmq'
         TagImage 'rabbitmq' "${2}"
         #PushImage 'rabbitmq' "${2}"
+    ;;
+    # ------------- GOTENBERG -------------
+    gotenberg)
+        ValidateTagName "${2}"
+
+        Title "Building and tagging ${IMAGE_PREFIX}gotenberg:${2}"
+        ConfirmPrompt
+
+        BuildImage 'gotenberg'
+        TagImage 'gotenberg' "${2}"
+        #PushImage 'gotenberg' "${2}"
     ;;
     # ------------- HELP -------------
     *)
